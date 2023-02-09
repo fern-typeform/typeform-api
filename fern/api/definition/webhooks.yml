@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: /forms/{form_id}/webhooks
+  path-parameters:
+    form_id:
+      docs: >-
+        Unique ID for the form. Find in your form URL. For example, in the URL
+        "https://mysite.typeform.com/to/u6nXL7" the form_id is `u6nXL7`.
+      type: string
+  endpoints:
+    list:
+      path: ""
+      method: GET
+      docs: Retrieve all webhooks for the specified typeform.
+      display-name: Retrieve webhooks
+
+    get:
+      path: /{tag}
+      method: GET
+      docs: Retrieve a single webhook.
+      display-name: Retrieve single webhook
+      path-parameters:
+        tag:
+          docs: Unique name you want to use for the webhook.
+          type: string
+
+    createOrUpdate:
+      path: /{tag}
+      method: PUT
+      docs: Create or update a webhook.
+      display-name: Create or update webhook
+      path-parameters:
+        tag:
+          docs: Unique name you want to use for the webhook.
+          type: string
+      request:
+        name: CreateOrUpdateWebhookRequest
+        body:
+          properties:
+            url:
+              docs: Webhook URL.
+              type: optional<string>
+            enabled:
+              docs: >-
+                True if you want to send responses to the webhook immediately.
+                Otherwise, false.
+              type: optional<boolean>
+            secret:
+              docs: >-
+                If specified, will be used to sign the webhook payload with HMAC
+                SHA256, so that you can verify that it came from Typeform.
+              type: optional<string>
+            verify_ssl:
+              docs: >-
+                True if you want Typeform to verify SSL certificates when
+                delivering payloads.
+              type: optional<boolean>
+
+    delete:
+      path: /{tag}
+      method: DELETE
+      docs: Delete a webhook.
+      display-name: Delete webhook
+      path-parameters:
+        tag:
+          docs: Unique name you want to use for the webhook.
+          type: string
