@@ -1,0 +1,318 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: /forms
+  endpoints:
+    list:
+      path: ""
+      method: GET
+      docs: >-
+        Retrieves a list of JSON descriptions for all forms in your Typeform
+        account (public and private). Forms are sorted by creation date in
+        descending order.
+      display-name: Retrieve forms
+      request:
+        name: ListThemeRequest
+        query-parameters:
+          search:
+            docs: Returns items that contain the specified string.
+            type: optional<string>
+          page:
+            docs: >-
+              The page of results to retrieve. Default `1` is the first page of
+              results.
+            type: optional<integer>
+          page_size:
+            docs: >-
+              Number of results to retrieve per page. Default is 10. Maximum is
+              200.
+            type: optional<double>
+          workspace_id:
+            docs: Retrieve typeforms for the specified workspace.
+            type: optional<string>
+
+    create:
+      path: ""
+      method: POST
+      docs: >-
+        Here's the general structure for requests to create a form:
+          - `title`: Title to use for the form.
+          - `settings`: Object that specifies form settings and metadata, including the language to use for the form, whether the form is publicly available, the basis for the progress bar, and search engine indexing settings.
+          - `theme`: Theme to use for the form.
+          - `workspace`: Workspace that contains the form.
+          - `hidden`: Array of Hidden Fields to use in the form.
+          - `variables`: Object that keeps track of total score or price, if you use them in the form.
+          - `welcome_screens`: Array of objects that specify settings and properties for the form's welcome screen.
+          - `thankyou_screens`: Array of objects that specify settings and properties for the form's thank you screen.
+          - `fields`: Array of objects that specify the fields to use in the form and their properties, validations, and attachments.
+          - `logic`: Array of Logic Jump objects to use in the form.
+        Expand the schema below for details about each of these elements. For
+        optional elements, if you don't send a value and the element doesn't
+        have a default value, no attribute will be returned.
+        Any images you want to use in your form must already exist in your
+        Typeform account. If you try to create a form that includes an image
+        that isn't already in your Typeform account, the response will include
+        an "IMAGE_NOT_FOUND" error. Use the [POST
+        https://api.typeform.com/images](/create/reference/create-image)
+        endpoint to add images to your account.
+        **NOTE:** It is not possible to inject third-party content into a
+        typeform using the Create API.
+      display-name: Create form
+      request:
+        name: CreateThemeRequest
+        body:
+          properties:
+            title:
+              docs: Title to use for the typeform.
+              type: string
+            settings: optional<FormSettings>
+            theme:
+              docs: >-
+                URL of the theme to use for the typeform. If you don't specify a
+                URL for the theme, Typeform applies a new copy of the default
+                theme to the form.
+              type: optional<string>
+            workspace:
+              docs: >-
+                URL of the workspace to use for the typeform. If you don't
+                specify a URL for the workspace, Typeform saves the form in the
+                default workspace.
+              type: WorkspaceUrl
+            hidden:
+              docs: Array of Hidden Fields to use in the form.
+              type: optional<list<string>>
+            variables: optional<FormVariables>
+            welcome_screens: optional<list<WelcomeScreen>>
+            thankyou_screens: optional<list<ThankYouScreen>>
+            fields: optional<list<FormField>>
+
+    get:
+      path: /{form_id}
+      method: GET
+      docs: >-
+        Retrieves a form by the given `form_id`. Includes any theme and images
+        attached to the form as references.
+        Details about the fields and elements for this endpoint are available in
+        the **Create Form** description.
+      display-name: Retrieve form
+      path-parameters:
+        form_id:
+          docs: >-
+            Unique ID for the form. Find in your form URL. For example, in the
+            URL "https://mysite.typeform.com/to/u6nXL7" the form_id is `u6nXL7`.
+          type: string
+
+    delete:
+      path: /{form_id}
+      method: DELETE
+      docs: >-
+        Deletes the form with the given `form_id` and all of the form's
+        responses.
+      display-name: Delete form
+      path-parameters:
+        form_id:
+          docs: >-
+            Unique ID for the form. Find in your form URL. For example, in the
+            URL "https://mysite.typeform.com/to/u6nXL7" the form_id is `u6nXL7`.
+          type: string
+
+types:
+  Language:
+    enum:
+      - en
+      - es
+      - ca
+      - fr
+      - de
+      - ru
+      - it
+      - da
+      - pt
+      - ch
+      - zh
+      - nl
+      - "no"
+      - uk
+      - ja
+      - ko
+      - hr
+      - fi
+      - sv
+      - pl
+      - el
+      - hu
+      - tr
+      - cs
+      - et
+      - di
+
+  ProgressBarType:
+    docs: >-
+      Basis for the progress bar displayed on the screen. Choose "proportion" to
+      show the number of questions answered so far. Choose "percentage" to show
+      the percentage of questions answered so far.
+    enum:
+      - percentage
+      - proportion
+
+  ImageUrl:
+    properties:
+      href:
+        docs: URL of image for search engines to display for your typeform.
+        type: optional<string>
+
+  FormMetadata:
+    properties:
+      allow_indexing:
+        docs: true to allow search engines to index your typeform. Otherwise, false.
+        type: optional<boolean>
+      description:
+        docs: Description for search engines to display for your typeform.
+        type: optional<string>
+      image: optional<ImageUrl>
+
+  NotificationSettings:
+    docs: >-
+      Settings for notifications sent to respondents immediately after
+      submitting the typeform.
+    properties:
+      enabled:
+        docs: >-
+          true to send respondent notifications. false to disable respondent
+          notifications.
+        type: optional<boolean>
+      recipient:
+        docs: >-
+          Email where respondent notification will be sent. Must be a Recall
+          Information value based on respondent's answer to a field:
+          {{field:ref}} or {{hidden:ref}}.
+        type: string
+      reply_to: optional<list<string>>
+      subject:
+        docs: >-
+          Subject to use for the notification email. Can combine text and Recall
+          Information value from one or more fields.
+          Available Recall Information values are {{form:title}},
+          {{account:fullname}}, {{account:email}}, {{account:name}},
+          {{link:report}}, and standard Recall Information for fields
+          {{field:ref}} and hidden fields {{hidden:ref}}.
+        type: string
+      message:
+        docs: >-
+          Message to include in the body of the notification email. Can combine
+          text and Recall Information value from one or more fields.
+          Available Recall Information values are {{form:title}},
+          {{account:fullname}}, {{account:email}}, {{account:name}},
+          {{link:report}}, {{form:all_answers}}, and standard Recall Information
+          for fields {{field:ref}} and hidden fields {{hidden:ref}}.
+          You can format messages with bold (`*bold*`) and italic (`_italic_`)
+          text. HTML tags are forbidden.
+        type: string
+
+  FormNotificationSettings:
+    properties:
+      self:
+        docs: >-
+          Settings for notifications sent when respondents complete and submit
+          the typeform.
+        type: optional<NotificationSettings>
+      respondent:
+        docs: >-
+          Settings for notifications sent to respondents immediately after
+          submitting the typeform.
+        type: optional<NotificationSettings>
+
+  FormSettings:
+    properties:
+      language: optional<Language>
+      is_public:
+        docs: true if your form is public. Otherwise, false (your form is private).
+        type: optional<boolean>
+      progress_bar:
+        docs: >-
+          Basis for the progress bar displayed on the screen. Choose
+          "proportion" to show the number of questions answered so far. Choose
+          "percentage" to show the percentage of questions answered so far.
+        type: optional<ProgressBarType>
+      show_progress_bar:
+        docs: true to display progress bar on the typeform. Otherwise, false.
+        type: optional<boolean>
+      show_typeform_branding:
+        docs: >-
+          true to display Typeform brand on the typeform. false to hide Typeform
+          branding on the typeform. Hiding Typeform branding is available for
+          [Premium
+          accounts](https://help.typeform.com/hc/en-us/articles/360030829332).
+        type: optional<boolean>
+      meta: optional<FormMetadata>
+      redirect_after_submit_url:
+        docs: URL where the typeform should redirect upon submission.
+        type: optional<string>
+      google_analytics:
+        docs: Google Analytics tracking ID to use for the form.
+        type: optional<string>
+      facebook_pixel:
+        docs: Facebook Pixel tracking ID to use for the form.
+        type: optional<string>
+      google_tag_manager:
+        docs: Google Tag Manager ID to use for the form.
+        type: optional<string>
+      notifications: optional<FormNotificationSettings>
+
+  WorkspaceUrl:
+    docs: >-
+      URL of the workspace to use for the typeform. If you don't specify a URL
+      for the workspace, Typeform saves the form in the default workspace.
+    properties:
+      href: optional<string>
+
+  FormVariables:
+    properties:
+      score:
+        docs: >-
+          Recall Information for keeping score as users answer each question
+          (for example, for quizzes).
+        type: optional<integer>
+      price:
+        docs: >-
+          Recall Information for tracking the total price of all items users
+          select (for example, for shopping carts, donation campaigns, and
+          payment collections).
+        type: optional<double>
+
+  AttachmentType:
+    docs: Type of attachment.
+    enum:
+      - image
+      - video
+
+  WelcomeScreen:
+    properties:
+      ref:
+        docs: Readable name you can use to reference the welcome screen.
+        type: optional<string>
+      title:
+        docs: Title for the welcome screen.
+        type: string
+
+  FormField:
+    docs: >-
+      Reference for properties in a field. The required fields and properties
+      depend on the `type` value.
+    properties:
+      ref:
+        docs: Readable name you can use to reference the field.
+        type: optional<string>
+      title:
+        docs: Unique name you assign to the field on this form.
+        type: string
+
+  ThankYouScreen:
+    properties:
+      ref:
+        docs: Readable name you can use to reference the thank you screen.
+        type: optional<string>
+      title:
+        docs: Title for the thank you screen.
+        type: string

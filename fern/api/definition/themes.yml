@@ -1,0 +1,176 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: /themes
+  endpoints:
+    list:
+      path: ""
+      method: GET
+      docs: >-
+        Retrieves a list of JSON descriptions for all themes in your Typeform
+        account (public and private). Themes are listed in reverse-chronological
+        order based on the date you added them to your account.
+      display-name: Retrieve themes
+      request:
+        name: ListThemesRequest
+        query-parameters:
+          page:
+            docs: >-
+              The page of results to retrieve. Default `1` is the first page of
+              results.
+            type: optional<integer>
+          page_size:
+            docs: >-
+              Number of results to retrieve per page. Default is 10. Maximum is
+              200.
+            type: optional<double>
+
+    create:
+      path: ""
+      method: POST
+      docs: Creates a new theme.
+      display-name: Create theme
+      request:
+        name: CreateThemeRequest
+        body:
+          properties:
+            background:
+              docs: Settings for the background.
+              type: optional<BackgroundSettings>
+            colors:
+              docs: >-
+                Colors the theme will apply to answers, background, buttons, and
+                questions.
+              type: ThemeColors
+            font:
+              docs: Font for the theme.
+              type: Font
+            has_transparent_button:
+              docs: "`true` if buttons should be transparent. Otherwise, `false`."
+              type: optional<boolean>
+            name:
+              docs: Name for the theme.
+              type: string
+
+    get:
+      path: /{theme_id}
+      method: GET
+      docs: Retrieves a theme in your Typeform account.
+      display-name: Retrieve theme
+      path-parameters:
+        theme_id:
+          docs: Unique ID for the theme.
+          type: string
+
+    udpate:
+      path: /{theme_id}
+      method: PUT
+      docs: >-
+        Updates a theme in your Typeform account. **NOTE:** You can't change
+        Typeform's public themes (the built-in themes that are available in all
+        accounts).
+      display-name: Update theme
+      path-parameters:
+        theme_id:
+          docs: Unique ID for the theme.
+          type: string
+      request:
+        name: UpdateThemeRequest
+        body:
+          properties:
+            background:
+              docs: Settings for the background.
+              type: optional<BackgroundSettings>
+            colors:
+              docs: >-
+                Colors the theme will apply to answers, background, buttons, and
+                questions.
+              type: ThemeColors
+            font:
+              docs: Font for the theme.
+              type: Font
+            has_transparent_button:
+              docs: "`true` if buttons should be transparent. Otherwise, `false`."
+              type: optional<boolean>
+            name:
+              docs: Name for the theme.
+              type: string
+
+    delete:
+      path: /{theme_id}
+      method: DELETE
+      docs: Deletes a theme from your Typeform account.
+      display-name: Delete theme
+      path-parameters:
+        theme_id:
+          docs: Unique ID for the theme.
+          type: string
+
+types:
+  BackgroundLayout:
+    docs: Layout for the background.
+    enum:
+      - fullscreen
+      - repeat
+      - value: no-repeat
+        name: NO_REPEAT
+
+  BackgroundSettings:
+    docs: Settings for the background.
+    properties:
+      href:
+        docs: Background image URL.
+        type: optional<string>
+      layout:
+        docs: Layout for the background.
+        type: optional<BackgroundLayout>
+      brightness:
+        docs: >-
+          Brightness for the background. `-1` is least bright (minimum) and `1`
+          is most bright (maximum).
+        type: optional<double>
+
+  ThemeColors:
+    docs: >-
+      Colors the theme will apply to answers, background, buttons, and
+      questions.
+    properties:
+      answer:
+        docs: Color the theme will apply to answers. Hexadecimal value.
+        type: string
+      background:
+        docs: Color the theme will apply to the background. Hexadecimal value.
+        type: string
+      button:
+        docs: Color the theme will apply to buttons. Hexadecimal value.
+        type: string
+      question:
+        docs: Color the theme will apply to questions. Hexadecimal value.
+        type: string
+
+  Font:
+    docs: Font for the theme.
+    enum:
+      - Acme
+      - Arial
+      - Arvo
+      - Bangers
+      - Cabin
+      - Courier
+      - Exo
+      - Georgia
+      - Handlee
+      - Karla
+      - Lato
+      - Lekton
+      - Lobster
+      - Lora
+      - McLaren
+      - Montserrat
+      - Oswald
+      - Quicksand
+      - Raleway
+      - Signika
+      - Sniglet
+      - Vollkorn

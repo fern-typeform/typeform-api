@@ -1,0 +1,6 @@
+name: api
+display-name: Typeform
+auth: bearer
+default-environment: Production
+environments: 
+  Production: https://api.typeform.com

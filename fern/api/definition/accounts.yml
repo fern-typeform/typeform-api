@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: /me
+  display-name: adfadf
+  endpoints:
+    get:
+      path: ""
+      method: GET
+      docs: Retrieve your own account information.
+      display-name: Retrieve your own account

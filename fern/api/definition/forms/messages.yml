@@ -1,0 +1,19 @@
+service: 
+  auth: true
+  base-path: /forms
+  endpoints: 
+    get:
+      path: /{form_id}/messages
+      method: GET
+      docs: >-
+        Retrieves the customizable messages for a form (specified by `form_id`)
+        using the form's  specified language.
+        You can format messages with bold (`*bold*`) and italic (`_italic_`)
+        text. HTML tags are forbidden.
+      display-name: Retrieve custom form messages
+      path-parameters:
+        form_id:
+          docs: >-
+            Unique ID for the form. Find in your form URL. For example, in the
+            URL "https://mysite.typeform.com/to/u6nXL7" the form_id is `u6nXL7`.
+          type: string
