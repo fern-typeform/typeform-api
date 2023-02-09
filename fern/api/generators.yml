@@ -2,7 +2,6 @@ default-group: external
 groups:
   external:
     generators:
-    
       - name: fernapi/fern-typescript-sdk
         version: 0.0.279
         output:
