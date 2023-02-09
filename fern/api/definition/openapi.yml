@@ -310,6 +310,8 @@ paths:
                 title:
                   type: string
                   description: Title to use for the typeform.
+                settings:
+                  $ref: '#/components/schemas/FormSettings'
         description: A complete form resource.
         required: true
       responses:
@@ -3534,3 +3536,157 @@ components:
     Language:
       type: string
       description: The language of text
+    FormSettings:
+      type: object
+      properties:
+        language: 
+          type: string
+        is_public:
+          type: boolean
+          default: true
+          description:
+            true if your form is public. Otherwise, false (your form
+            is private).
+        progress_bar:
+          type: string
+          default: proportion
+          description:
+            Basis for the progress bar displayed on the screen.
+            Choose "proportion" to show the number of questions
+            answered so far. Choose "percentage" to show the
+            percentage of questions answered so far.
+        show_progress_bar:
+          type: boolean
+          default: true
+          description:
+            true to display progress bar on the typeform. Otherwise,
+            false.
+        show_typeform_branding:
+          type: boolean
+          default: true
+          description:
+            true to display Typeform brand on the typeform. false to
+            hide Typeform branding on the typeform. Hiding Typeform
+            branding is available for [Premium
+            accounts](https://help.typeform.com/hc/en-us/articles/360030829332).
+        meta:
+          $ref: '#/components/schemas/FormMeta'
+        redirect_after_submit_url:
+          type: string
+          description: URL where the typeform should redirect upon submission.
+        google_analytics:
+          type: string
+          description: Google Analytics tracking ID to use for the form.
+        facebook_pixel:
+          type: string
+          description: Facebook Pixel tracking ID to use for the form.
+        google_tag_manager:
+          type: string
+          description: Google Tag Manager ID to use for the form.
+        notifications:
+          $ref: '#/components/schemas/Notifications'
+          type: object
+    FormMeta:
+      type: object
+      properties:
+        allow_indexing:
+          type: boolean
+          default: true
+          description:
+            true to allow search engines to index your typeform.
+            Otherwise, false.
+        description:
+          type: string
+          description:
+            Description for search engines to display for your
+            typeform.
+        image:
+          $ref: '#/components/schemas/FormImage'
+    FormImage:
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri
+          description:
+            URL of image for search engines to display for
+            your typeform.
+
+    NotificationsSelf: 
+      type: object 
+      description:
+        Settings for notifications sent when respondents
+        complete and submit the typeform.
+      properties:
+        enabled:
+          type: boolean
+          default: true
+          description:
+            true to send notifications. false to disable
+            notifications.
+        recipients:
+          type: array
+          items:
+            type: string
+            format: email
+            description:
+              Email addresses where notifications should be
+              sent.
+        reply_to:
+          type: string
+          description:
+            "Email address to use for notification Reply-To.
+            Must be a Recall Information value based on
+            respondent's answer to a field: {{field:ref}} or
+            {{hidden:ref}}."
+        subject:
+          type: string
+          example: You received a response to your typeform
+            {{form:title}}!
+          description: >-
+            Subject to use for the notification email. Can
+            combine text and Recall Information value from
+            one or more fields.
+            Available Recall Information values are {{form:title}}, {{account:email}}, {{account:name}}, {{link:report}}, and standard Recall Information for fields {{field:ref}} and hidden fields {{hidden:ref}}.
+        message:
+          type: string
+          description: >-
+            Message to include in the body of the
+            notification email. Can combine text and Recall
+            Information value from one or more fields.
+            Available Recall Information values are {{form:title}}, {{account:email}}, {{account:name}}, {{link:report}}, {{form:all_answers}}, and standard Recall Information for fields {{field:ref}} and hidden fields {{hidden:ref}}.
+            You can format messages with bold (`*bold*`) and italic (`_italic_`) text. HTML tags are forbidden.
+      required:
+        - recipients
+        - subject
+        - message
+    respondent:
+      type: object
+      description:
+        Settings for notifications sent to respondents
+        immediately after submitting the typeform.
+      properties:
+        enabled:
+          type: boolean
+          default: true
+          description:
+            true to send respondent notifications. false to
+            disable respondent notifications.
+        recipient:
+          type: string
+          description:
+            "Email where respondent notification will be
+            sent. Must be a Recall Information value based
+            on respondent's answer to a field: {{field:ref}}
+            or {{hidden:ref}}."
+        reply_to:
+          type: array
+          items:
+            type: string
+            format: email
+        
+    Notifications: 
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/NotificationsSelf'
