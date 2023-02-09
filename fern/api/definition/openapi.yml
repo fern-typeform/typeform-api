@@ -309,155 +309,6 @@ paths:
                 title:
                   type: string
                   description: Title to use for the typeform.
-                settings:
-                  type: object
-                  properties:
-                    language: 
-                      type: string
-                    is_public:
-                      type: boolean
-                      default: true
-                      description:
-                        true if your form is public. Otherwise, false (your form
-                        is private).
-                    progress_bar:
-                      type: string
-                      default: proportion
-                      description:
-                        Basis for the progress bar displayed on the screen.
-                        Choose "proportion" to show the number of questions
-                        answered so far. Choose "percentage" to show the
-                        percentage of questions answered so far.
-                    show_progress_bar:
-                      type: boolean
-                      default: true
-                      description:
-                        true to display progress bar on the typeform. Otherwise,
-                        false.
-                    show_typeform_branding:
-                      type: boolean
-                      default: true
-                      description:
-                        true to display Typeform brand on the typeform. false to
-                        hide Typeform branding on the typeform. Hiding Typeform
-                        branding is available for [Premium
-                        accounts](https://help.typeform.com/hc/en-us/articles/360030829332).
-                    meta:
-                      type: object
-                      properties:
-                        allow_indexing:
-                          type: boolean
-                          default: true
-                          description:
-                            true to allow search engines to index your typeform.
-                            Otherwise, false.
-                        description:
-                          type: string
-                          description:
-                            Description for search engines to display for your
-                            typeform.
-                        image:
-                          type: object
-                          properties:
-                            href:
-                              type: string
-                              format: uri
-                              description:
-                                URL of image for search engines to display for
-                                your typeform.
-                    redirect_after_submit_url:
-                      type: string
-                      description: URL where the typeform should redirect upon submission.
-                    google_analytics:
-                      type: string
-                      description: Google Analytics tracking ID to use for the form.
-                    facebook_pixel:
-                      type: string
-                      description: Facebook Pixel tracking ID to use for the form.
-                    google_tag_manager:
-                      type: string
-                      description: Google Tag Manager ID to use for the form.
-                    notifications:
-                      type: object
-                      properties:
-                        self:
-                          type: object
-                          description:
-                            Settings for notifications sent when respondents
-                            complete and submit the typeform.
-                          properties:
-                            enabled:
-                              type: boolean
-                              default: true
-                              description:
-                                true to send notifications. false to disable
-                                notifications.
-                            recipients:
-                              type: array
-                              items:
-                                type: string
-                                format: email
-                                description:
-                                  Email addresses where notifications should be
-                                  sent.
-                            reply_to:
-                              type: string
-                              description:
-                                "Email address to use for notification Reply-To.
-                                Must be a Recall Information value based on
-                                respondent's answer to a field: {{field:ref}} or
-                                {{hidden:ref}}."
-                            subject:
-                              type: string
-                              example: You received a response to your typeform
-                                {{form:title}}!
-                              description: >-
-                                Subject to use for the notification email. Can
-                                combine text and Recall Information value from
-                                one or more fields.
-
-
-                                Available Recall Information values are {{form:title}}, {{account:email}}, {{account:name}}, {{link:report}}, and standard Recall Information for fields {{field:ref}} and hidden fields {{hidden:ref}}.
-                            message:
-                              type: string
-                              description: >-
-                                Message to include in the body of the
-                                notification email. Can combine text and Recall
-                                Information value from one or more fields.
-
-
-                                Available Recall Information values are {{form:title}}, {{account:email}}, {{account:name}}, {{link:report}}, {{form:all_answers}}, and standard Recall Information for fields {{field:ref}} and hidden fields {{hidden:ref}}.
-
-
-                                You can format messages with bold (`*bold*`) and italic (`_italic_`) text. HTML tags are forbidden.
-                          required:
-                            - recipients
-                            - subject
-                            - message
-                        respondent:
-                          type: object
-                          description:
-                            Settings for notifications sent to respondents
-                            immediately after submitting the typeform.
-                          properties:
-                            enabled:
-                              type: boolean
-                              default: true
-                              description:
-                                true to send respondent notifications. false to
-                                disable respondent notifications.
-                            recipient:
-                              type: string
-                              description:
-                                "Email where respondent notification will be
-                                sent. Must be a Recall Information value based
-                                on respondent's answer to a field: {{field:ref}}
-                                or {{hidden:ref}}."
-                            reply_to:
-                              type: array
-                              items:
-                                type: string
-                                format: email
         description: A complete form resource.
         required: true
       responses:
@@ -558,45 +409,6 @@ components:
           type: number
         average:
           type: number
-    FormResultMetrics:
-      type: object
-      properties:
-        desktop:
-          type: object
-          properties:
-            visits:
-              type: number
-            unique:
-              type: number
-            average:
-              type: number
-        tablet:
-          type: object
-          properties:
-            visits:
-              type: number
-            unique:
-              type: number
-            average:
-              type: number
-        phone:
-          type: object
-          properties:
-            visits:
-              type: number
-            unique:
-              type: number
-            average:
-              type: number
-        unknown:
-          type: object
-          properties:
-            visits:
-              type: number
-            unique:
-              type: number
-            average:
-              type: number
       example:
         desktop:
           average: 1
@@ -638,27 +450,8 @@ components:
           type: array
           items:
             type: object
-        metadata:
-          type: object
-          description: Metadata about a client's HTTP request.
-          properties:
-            user_agent:
-              type: string
-            platform:
-              type: string
-              description: Derived from user agent
-            referer:
-              type: string
-            network_id:
-              type: string
-              description: Masked client's IP
         landed_at:
           type: string
-        _links:
-          type: object
-          properties:
-            self:
-              type: string
     LandingCreate:
       type: object
       description: Landing resource as created by clients.
@@ -672,19 +465,6 @@ components:
                 type: string
               value:
                 type: string
-        metadata:
-          type: object
-          description: Metadata about a client's HTTP request.
-          properties:
-            user_agent:
-              type: string
-            referer:
-              type: string
-            ip:
-              type: string
-              description: Client's IP
-          required:
-            - user_agent
     FormSubmission:
       type: object
       description:
@@ -710,46 +490,8 @@ components:
             Time that the form response was submitted. In ISO 8601 format, UTC
             time, to the second, with T as a delimiter between the date and
             time.
-        metadata:
-          type: object
-          description: Metadata about a client's HTTP request.
-          properties:
-            user_agent:
-              type: string
-            platform:
-              type: string
-              description: Derived from user agent
-            referer:
-              type: string
-            network_id:
-              type: string
-              description: Ip of the client
-          required:
-            - user_agent
         hidden:
           type: object
-        definition:
-          type: object
-          description:
-            Subset of a complete form definition to be included with a
-            submission.
-          properties:
-            fields:
-              type: array
-              items:
-                type: object
-                description:
-                  Subset of a complete field definition to be included with a
-                  submission.
-                properties:
-                  id:
-                    type: string
-                  type:
-                    type: string
-                  title:
-                    type: string
-                  description:
-                    type: string
         answers:
           type: array
           items:
@@ -829,11 +571,6 @@ components:
                     type: string
             required:
               - type
-        calculated:
-          type: object
-          properties:
-            score:
-              type: number
     FormSubmissionCreate:
       type: object
       properties:
@@ -1278,13 +1015,6 @@ components:
           type: number
           format: integer
           description: Number of pages.
-        _links:
-          type: object
-          properties:
-            metrics:
-              type: string
-            reports:
-              type: string
         items:
           type: array
           items:
@@ -1442,83 +1172,6 @@ components:
                 properties:
                   score:
                     type: number
-    FormSubmissionAnswer:
-      type: object
-      description: |-
-        A sum of all fields that may occur in an answer. Based on the
-         field type, different properties are required.
-      properties:
-        field:
-          type: object
-          properties:
-            id:
-              type: string
-              description: The unique id of the form field the answer refers to.
-            type:
-              type: string
-              description: The field's type in the original form.
-            ref:
-              type: string
-              description:
-                The reference for the question the answer relates to. Use the
-                `ref` value to match answers with questions. The Responses
-                payload only includes `ref` for the fields where you specified
-                them when you created the form.
-            title:
-              type: string
-              description: The form field's title which the answer is related to.
-          required:
-            - id
-        type:
-          type: string
-          description: The answer-field's type.
-        choice:
-          type: object
-          description: Represents single choice answers for dropdown-like fields.
-          properties:
-            label:
-              type: string
-            other:
-              type: string
-        choices:
-          type: object
-          description: Represents multiple choice answers.
-          properties:
-            labels:
-              type: array
-              items:
-                type: string
-            other:
-              type: string
-        date:
-          type: string
-          format: date-time
-        email:
-          type: string
-          format: email
-        file_url:
-          type: string
-          format: uri
-        number:
-          type: number
-        boolean:
-          type: boolean
-        text:
-          type: string
-        url:
-          type: string
-          format: uri
-        payment:
-          type: object
-          properties:
-            amount:
-              type: string
-            last4:
-              type: string
-            name:
-              type: string
-      required:
-        - type
     ReportItem:
       type: object
       properties:
@@ -1544,23 +1197,6 @@ components:
       properties:
         token:
           type: string
-        service:
-    TypebotResp:
-      type: object
-      properties:
-        connected_services:
-          type: object
-          properties:
-            messenger:
-              type: object
-              properties:
-                sharing_url:
-                  type: string
-            slack:
-              type: object
-              properties:
-                bot_name:
-                  type: string
     ZapierDefinition:
       type: array
       items:
@@ -1715,33 +1351,10 @@ components:
         token_expiration_period:
           type: integer
           format: uint32
-    Grant:
-      type: object
-      properties:
-        application:
-          type: object
-          properties:
-            client_id:
-              type: string
-            name:
-              type: string
-            homepage_url:
-              type: string
-            logo_url:
-              type: string
         scopes:
           type: array
           items:
             type: string
-        stats:
-          type: object
-          properties:
-            codes_count:
-              type: number
-            tokens_count:
-              type: number
-            refresh_tokens_count:
-              type: number
     CreatePersonalTokenRequest:
       type: object
       required:
@@ -1798,21 +1411,6 @@ components:
           type: array
           items:
             type: string
-        payload:
-          type: object
-          required:
-            - account_id
-            - user_id
-            - plan
-          properties:
-            account_id:
-              type: string
-            user_id:
-              type: string
-            plan:
-              type: string
-            impersonator_account_id:
-              type: string
     Token:
       type: object
       properties:
@@ -1837,21 +1435,6 @@ components:
         access_token:
           type: string
         type:
-          type: string
-    Payload:
-      type: object
-      required:
-        - account_id
-        - user_id
-        - plan
-      properties:
-        account_id:
-          type: string
-        user_id:
-          type: string
-        plan:
-          type: string
-        impersonator_account_id:
           type: string
     Scopes:
       type: array
@@ -2227,76 +1810,6 @@ components:
         Metrics aggregates counters and calculations for the results of a
         specific form. It provides both aggregates per platform and a global
         summary.
-      properties:
-        summary:
-          type: object
-          description:
-            Summary is global counters aggregate of the whole results set of a
-            form.
-          properties:
-            responses_count:
-              description: Total of responses received.
-              type: number
-            completion_rate:
-              description: Completion rate. The number represents a percentage.
-              type: number
-            average_time:
-              description: Average completion time in milliseconds.
-              type: number
-          example:
-            response_count: 100
-            completion_rate: 45.5
-            average_time: 56000
-        platforms:
-          description: Platforms is a collection of platform specific metrics.
-          type: array
-          items:
-            type: object
-            description:
-              Metrics platform shows the specific metrics aggregates for a
-              specific platform.
-            properties:
-              platform:
-                description: The name of the platform.
-                type: string
-              responses_count:
-                description: Total of responses received.
-                type: number
-              completion_rate:
-                description: Completion rate. The number represents a percentage.
-                type: number
-              average_time:
-                description: Average completion time in milliseconds.
-                type: number
-            example:
-              platform: desktop
-              response_count: 100
-              completion_rate: 45.5
-              average_time: 56000
-    BoxResponses:
-      type: object
-      description:
-        BoxResponses is a collection of responses for a given box, plus a
-        summary for requesting the next page.
-      properties:
-        page:
-          type: object
-          description:
-            Page is a set of data to request the next page of a list of
-            responses.
-          properties:
-            count:
-              type: number
-              description: Total number of responses for this field
-            next_until:
-              type: number
-              description:
-                Next until is the timestamp for starting pulling the next page.
-                When the requested page is the latest, this property will not
-                appear.
-          example:
-            count: 10
-            next_until: 1502362013
     Report:
       type: object
       description: Get report share data for a given form.
@@ -2307,38 +1820,6 @@ components:
           type: string
         has_design:
           type: boolean
-    Responses:
-      type: object
-      description:
-        Responses is a collection of responses for a given box, plus a summary
-        for requesting the next page.
-      properties:
-        page:
-          type: object
-          description:
-            Page is a set of data to request the next page of a list of
-            responses.
-          properties:
-            next_until:
-              type: number
-              description:
-                Next until is the timestamp for start pulling the next page.
-                When the requested page is the latest, this property will not
-                appear.
-            next_since:
-              type: number
-              description:
-                Next since is the timestamp for start pulling the next page when
-                order is asc. When the requested page is the latest, this
-                property will not appear.
-            next_page:
-              type: number
-              description:
-                Next page is the number of the following page when sorting by
-                field. When the requested page is the latest, this property will
-                not appear.
-          example:
-            next_until: 1502362013
     ViewResponses:
       type: array
       items:
@@ -2901,91 +2382,6 @@ components:
         token:
           type: string
           example: 1bc29b36f623ba82aaf6724fd3b1671
-        destination:
-          type: object
-          properties:
-            id:
-              type: string
-              example: "42"
-            name:
-              type: string
-              example: abc123
-        data:
-          type: object
-          required:
-            - event_id
-            - event_type
-            - form_response
-          properties:
-            event_id:
-              type: string
-              example: LtWXD3crgy
-            event_type:
-              type: string
-              example: form_response
-            form_response:
-              type: object
-              required:
-                - form_id
-                - token
-                - submitted_at
-                - landed_at
-                - answers
-                - calculated
-              properties:
-                form_id:
-                  type: string
-                  example: lT4Z3j
-                token:
-                  type: string
-                  example: a3a12ec67a1365927098a606107fac15
-                submitted_at:
-                  type: string
-                  example: 2018-01-18T18:17:02Z
-                landed_at:
-                  type: string
-                  example: 2018-01-18T18:07:02Z
-                answers:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                      - type
-                      - text
-                      - field
-                    properties:
-                      type:
-                        type: string
-                        example: text
-                      text:
-                        type: string
-                        example:
-                          It's cold right now! I live in an older medium-sized
-                          city with a university. Geographically, the area is
-                          hilly.
-                      field:
-                        type: object
-                        required:
-                          - id
-                          - type
-                        properties:
-                          id:
-                            type: string
-                            example: DlXFaesGBpoF
-                          type:
-                            type: string
-                            example: long_text
-                          ref:
-                            type: string
-                            example: my_ref
-                calculated:
-                  type: object
-                  required:
-                    - score
-                  properties:
-                    score:
-                      type: integer
-                      example: 9
     SetupErrorResponse:
       type: object
       required:
@@ -3021,31 +2417,6 @@ components:
               type:
                 type: string
                 example: abc123
-    Mapping:
-      type: object
-      required:
-        - typeform_field
-        - provider_field
-      properties:
-        typeform_field:
-          type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-              example: abc123
-        provider_field:
-          type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-              example: abc123
-            type:
-              type: string
-              example: abc123
     TypeformField:
       type: object
       required:
@@ -3065,81 +2436,6 @@ components:
         type:
           type: string
           example: abc123
-    Submission:
-      type: object
-      required:
-        - event_id
-        - event_type
-        - form_response
-      properties:
-        event_id:
-          type: string
-          example: LtWXD3crgy
-        event_type:
-          type: string
-          example: form_response
-        form_response:
-          type: object
-          required:
-            - form_id
-            - token
-            - submitted_at
-            - landed_at
-            - answers
-            - calculated
-          properties:
-            form_id:
-              type: string
-              example: lT4Z3j
-            token:
-              type: string
-              example: a3a12ec67a1365927098a606107fac15
-            submitted_at:
-              type: string
-              example: 2018-01-18T18:17:02Z
-            landed_at:
-              type: string
-              example: 2018-01-18T18:07:02Z
-            answers:
-              type: array
-              items:
-                type: object
-                required:
-                  - type
-                  - text
-                  - field
-                properties:
-                  type:
-                    type: string
-                    example: text
-                  text:
-                    type: string
-                    example:
-                      It's cold right now! I live in an older medium-sized city
-                      with a university. Geographically, the area is hilly.
-                  field:
-                    type: object
-                    required:
-                      - id
-                      - type
-                    properties:
-                      id:
-                        type: string
-                        example: DlXFaesGBpoF
-                      type:
-                        type: string
-                        example: long_text
-                      ref:
-                        type: string
-                        example: my_ref
-            calculated:
-              type: object
-              required:
-                - score
-              properties:
-                score:
-                  type: integer
-                  example: 9
     Answer:
       type: object
       required:
@@ -3155,21 +2451,6 @@ components:
           example:
             It's cold right now! I live in an older medium-sized city with a
             university. Geographically, the area is hilly.
-        field:
-          type: object
-          required:
-            - id
-            - type
-          properties:
-            id:
-              type: string
-              example: DlXFaesGBpoF
-            type:
-              type: string
-              example: long_text
-            ref:
-              type: string
-              example: my_ref
     AnswerField:
       type: object
       required:
@@ -3239,14 +2520,6 @@ components:
                   ref:
                     type: string
                     example: my_ref
-        calculated:
-          type: object
-          required:
-            - score
-          properties:
-            score:
-              type: integer
-              example: 9
     Calculated:
       type: object
       required:
@@ -3391,15 +2664,6 @@ components:
           type: object
           example:
             data_center: us15
-        destination:
-          type: object
-          properties:
-            id:
-              type: string
-              example: "42"
-            name:
-              type: string
-              example: abc123
     Delete:
       type: object
       required:
@@ -3421,15 +2685,6 @@ components:
       properties:
         integration_id:
           type: string
-        destination:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            portal_id:
-              type: number
         backfill_possible:
           type: boolean
       example:
@@ -3458,25 +2713,6 @@ components:
             The use case of the integration in snake case(e.g. add_contact,
             add_card). These constants will be defined by us and will not need
             to match with any external definition. TDB the different types.
-        destination:
-          type: object
-          description:
-            Here you'll define which destination is the customer choosing so
-            this endpoint returns the resources related to it.
-          properties:
-            id:
-              type: string
-              description:
-                Unique identifier for the destination. E.x. for Mailchimp this
-                is the id of the list which to add contacts to.
-            destination:
-              type: string
-              description:
-                Could be **optional**. This is actually a nested Destination
-                object, used to specify  sub-destinations.
-          example:
-            id: list_abc_123
-            destination: null
     V1FormDescription:
       type: object
       properties:
@@ -3683,25 +2919,6 @@ components:
           type: string
           description: Determines how charges are calculated
           example: fixed
-        price:
-          type: object
-          properties:
-            currency:
-              type: object
-              description: Currency information
-              properties:
-                code:
-                  type: string
-                  description: Code that uniquely identifies a currency
-                  format: ISO-4217
-                  example: EUR
-            amount:
-              type: integer
-              example: 100
-            scale:
-              type: integer
-              description: Number of digits to the right of the decimal point in `amount`
-              example: 2
         addons:
           type: array
           items:
@@ -3780,25 +2997,6 @@ components:
       type: string
       description: Determines how charges are calculated
       example: fixed
-    Price:
-      type: object
-      properties:
-        currency:
-          type: object
-          description: Currency information
-          properties:
-            code:
-              type: string
-              description: Code that uniquely identifies a currency
-              format: ISO-4217
-              example: EUR
-        amount:
-          type: integer
-          example: 100
-        scale:
-          type: integer
-          description: Number of digits to the right of the decimal point in `amount`
-          example: 2
     SubscriptionRequest:
       type: object
       required:
@@ -3888,220 +3086,10 @@ components:
                       Number of digits to the right of the decimal point in
                       `amount`
                     example: 2
-    Tier:
-      type: object
-      required:
-        - from
-        - price
-      properties:
-        from:
-          type: number
-          description: Minimum number of unit which the tier applies(inclusive).
-        to:
-          type: number
-          description:
-            Maximum number of unit which the tier applies(inclusive). It can be
-            null.
-        price:
-          type: object
-          properties:
-            currency:
-              type: object
-              description: Currency information
-              properties:
-                code:
-                  type: string
-                  description: Code that uniquely identifies a currency
-                  format: ISO-4217
-                  example: EUR
-            amount:
-              type: integer
-              example: 100
-            scale:
-              type: integer
-              description: Number of digits to the right of the decimal point in `amount`
-              example: 2
-    BillingDetails:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the company or individual
-          example: Typeform
-        country:
-          type: object
-          properties:
-            code:
-              type: string
-              description: A country code
-              format: ISO 3166-1 Alpha-2
-              example: AD
-        vat_number:
-          type: string
-          example: GB123456
-        street_address:
-          type: string
-          example: Carrer de Bac de Roda, 163
-        city:
-          type: string
-          example: Barcelona
-        postal_code:
-          type: integer
-          example: "08018"
-    CreditCardPayload:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Code that uniquely identifies a payment source
-          example: 01CETZ7TAD6RAHFB1TRE3SMG8
-        source:
-          type: string
-        payload:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Cardholder's name
-              example: John Doe
-            brand:
-              type: string
-              description: Brand of the credit card
-              example: MasterCard
-            last4:
-              type: integer
-              description: Last four digits of the credit card
-              example: 4567
     PaymentSourceId:
       type: string
       description: Code that uniquely identifies a payment source
       example: 01CETZ7TAD6RAHFB1TRE3SMG8
-    CheckoutRequest:
-      type: object
-      required:
-        - subscription
-        - payment_source_id
-      properties:
-        subscription:
-          type: object
-          required:
-            - plan_id
-          properties:
-            plan_id:
-              type: string
-              format: ULID
-              example: 01CETTA1Z7RFTEA3XEPSJDHRAT
-            addons:
-              type: array
-              items:
-                type: object
-                required:
-                  - id
-                  - quantity
-                properties:
-                  id:
-                    type: string
-                    format: ULID
-                    example: 01CETZ7TAD6RAHFB1GNT43SMG8
-                  quantity:
-                    type: integer
-                    minimum: 0
-                    example: 3
-        payment_source_id:
-          type: string
-          description: Code that uniquely identifies a payment source
-          example: 01CETZ7TAD6RAHFB1TRE3SMG8
-        billing_details:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Name of the company or individual
-              example: Typeform
-            country:
-              type: object
-              properties:
-                code:
-                  type: string
-                  description: A country code
-                  format: ISO 3166-1 Alpha-2
-                  example: AD
-            vat_number:
-              type: string
-              example: GB123456
-            street_address:
-              type: string
-              example: Carrer de Bac de Roda, 163
-            city:
-              type: string
-              example: Barcelona
-            postal_code:
-              type: integer
-              example: "08018"
-        coupon_id:
-          type: string
-          example: coupon-id
-    OrderSummaryRequest:
-      type: object
-      required:
-        - subscription
-        - billing_details
-      properties:
-        subscription:
-          type: object
-          required:
-            - plan_id
-          properties:
-            plan_id:
-              type: string
-              format: ULID
-              example: 01CETTA1Z7RFTEA3XEPSJDHRAT
-            addons:
-              type: array
-              items:
-                type: object
-                required:
-                  - id
-                  - quantity
-                properties:
-                  id:
-                    type: string
-                    format: ULID
-                    example: 01CETZ7TAD6RAHFB1GNT43SMG8
-                  quantity:
-                    type: integer
-                    minimum: 0
-                    example: 3
-        billing_details:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Name of the company or individual
-              example: Typeform
-            country:
-              type: object
-              properties:
-                code:
-                  type: string
-                  description: A country code
-                  format: ISO 3166-1 Alpha-2
-                  example: AD
-            vat_number:
-              type: string
-              example: GB123456
-            street_address:
-              type: string
-              example: Carrer de Bac de Roda, 163
-            city:
-              type: string
-              example: Barcelona
-            postal_code:
-              type: integer
-              example: "08018"
-        coupon_id:
-          type: string
-          example: coupon-id
     Discount:
       type: object
       properties:
@@ -4109,26 +3097,6 @@ components:
           type: string
         type:
           type: string
-        amount:
-          type: object
-          description: It will only be present when type is `amount`
-          properties:
-            currency:
-              type: object
-              description: Currency information
-              properties:
-                code:
-                  type: string
-                  description: Code that uniquely identifies a currency
-                  format: ISO-4217
-                  example: EUR
-            amount:
-              type: integer
-              example: 100
-            scale:
-              type: integer
-              description: Number of digits to the right of the decimal point in `amount`
-              example: 2
         percentage:
           type: integer
           description: It will only be present when type is `percentage`
@@ -4145,26 +3113,6 @@ components:
           type: string
         duration:
           type: string
-        amount:
-          description: Amount to discount. Only set when `type` is `amount`
-          type: object
-          properties:
-            currency:
-              type: object
-              description: Currency information
-              properties:
-                code:
-                  type: string
-                  description: Code that uniquely identifies a currency
-                  format: ISO-4217
-                  example: EUR
-            amount:
-              type: integer
-              example: 100
-            scale:
-              type: integer
-              description: Number of digits to the right of the decimal point in `amount`
-              example: 2
         percentage:
           description: Percentage to discount. Only set when `type` is `percentage`
           type: number
@@ -4220,136 +3168,6 @@ components:
                       Number of digits to the right of the decimal point in
                       `amount`
                     example: 2
-        vat:
-          type: object
-          properties:
-            type:
-              description:
-                How VAT applies to this order. `none` for customers outside of
-                the EU, `included` for individuals inside the EU and customers
-                inside Spain, and `reverse` for non-Spanish companies inside the
-                EU
-              type: string
-              example: reverse
-            rate:
-              description:
-                VAT rate to apply, varies between countries. It only applies
-                when the type of vat is either `included` or `reverse`
-              type: number
-              format: float
-              example: 0.21
-        renewal:
-          type: object
-          description: Information about subscription renewal
-          properties:
-            period_start:
-              description:
-                When the purchased subscription would renew automatically, if no
-                changes to it were made before
-              type: string
-              format: date-time
-              example: 2017-07-21T17:32:28.000Z
-            price:
-              type: object
-              properties:
-                currency:
-                  type: object
-                  description: Currency information
-                  properties:
-                    code:
-                      type: string
-                      description: Code that uniquely identifies a currency
-                      format: ISO-4217
-                      example: EUR
-                amount:
-                  type: integer
-                  example: 100
-                scale:
-                  type: integer
-                  description:
-                    Number of digits to the right of the decimal point in
-                    `amount`
-                  example: 2
-        discount:
-          type: object
-          properties:
-            id:
-              type: string
-              example: coupon-id
-            type:
-              type: string
-            duration:
-              type: string
-            amount:
-              description: Amount to discount. Only set when `type` is `amount`
-              type: object
-              properties:
-                currency:
-                  type: object
-                  description: Currency information
-                  properties:
-                    code:
-                      type: string
-                      description: Code that uniquely identifies a currency
-                      format: ISO-4217
-                      example: EUR
-                amount:
-                  type: integer
-                  example: 100
-                scale:
-                  type: integer
-                  description:
-                    Number of digits to the right of the decimal point in
-                    `amount`
-                  example: 2
-            percentage:
-              description: Percentage to discount. Only set when `type` is `percentage`
-              type: number
-              example: 0.255
-    BasePlanOrderSummaryLineItem:
-      type: object
-      properties:
-        type:
-          type: string
-        payload:
-          type: object
-          properties:
-            plan_id:
-              type: string
-              description: A unique identifier for the pricing plan
-              example: 123asd
-            plan_name:
-              type: string
-              description: The name of a plan
-              example: essentials
-            period:
-              type: string
-              description: The amount of time a subscription period lasts
-              format: Duration in ISO-8601
-              example: P1M
-            charge_model:
-              type: string
-              description: Determines how charges are calculated
-              example: fixed
-        price:
-          type: object
-          properties:
-            currency:
-              type: object
-              description: Currency information
-              properties:
-                code:
-                  type: string
-                  description: Code that uniquely identifies a currency
-                  format: ISO-4217
-                  example: EUR
-            amount:
-              type: integer
-              example: 100
-            scale:
-              type: integer
-              description: Number of digits to the right of the decimal point in `amount`
-              example: 2
     OrderSummaryVAT:
       type: object
       properties:
@@ -4378,127 +3196,10 @@ components:
           type: string
           format: date-time
           example: 2017-07-21T17:32:28.000Z
-        price:
-          type: object
-          properties:
-            currency:
-              type: object
-              description: Currency information
-              properties:
-                code:
-                  type: string
-                  description: Code that uniquely identifies a currency
-                  format: ISO-4217
-                  example: EUR
-            amount:
-              type: integer
-              example: 100
-            scale:
-              type: integer
-              description: Number of digits to the right of the decimal point in `amount`
-              example: 2
     DateTime:
       type: string
       format: date-time
       example: 2017-07-21T17:32:28.000Z
-    CurrentSubscriptionReadModel:
-      type: object
-      description: Subscription information
-      properties:
-        renewal:
-          type: object
-          description: Subscription information
-          properties:
-            plan_name:
-              type: string
-              description: The name of a plan
-              example: essentials
-            period:
-              type: object
-              description: Period of a subscription
-              properties:
-                duration:
-                  type: string
-                  description: The amount of time a subscription period lasts
-                  format: Duration in ISO-8601
-                  example: P1M
-                start:
-                  description: When the period starts
-                  type: string
-                  format: date-time
-                  example: 2017-07-21T17:32:28.000Z
-                end:
-                  description: When the period ends
-                  type: string
-                  format: date-time
-                  example: 2017-07-21T17:32:28.000Z
-            status:
-              type: string
-              description:
-                The status of the subscription. It will be ongoing while users
-                don't perform any action that will change the subscription at
-                the end of the current period
-              example: ongoing
-            addons:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: ULID
-                    example: 01CETTA1Z7RFREW3XEPSJDHRAT
-                  type:
-                    type: string
-                  quantity:
-                    type: integer
-                    minimum: 0
-                    example: 3
-        plan_name:
-          type: string
-          description: The name of a plan
-          example: essentials
-        period:
-          type: object
-          description: Period of a subscription
-          properties:
-            duration:
-              type: string
-              description: The amount of time a subscription period lasts
-              format: Duration in ISO-8601
-              example: P1M
-            start:
-              description: When the period starts
-              type: string
-              format: date-time
-              example: 2017-07-21T17:32:28.000Z
-            end:
-              description: When the period ends
-              type: string
-              format: date-time
-              example: 2017-07-21T17:32:28.000Z
-        status:
-          type: string
-          description:
-            The status of the subscription. It will be ongoing while users don't
-            perform any action that will change the subscription at the end of
-            the current period
-          example: ongoing
-        addons:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: ULID
-                example: 01CETTA1Z7RFREW3XEPSJDHRAT
-              type:
-                type: string
-              quantity:
-                type: integer
-                minimum: 0
-                example: 3
     SubscriptionReadModel:
       type: object
       description: Subscription information
@@ -4507,25 +3208,6 @@ components:
           type: string
           description: The name of a plan
           example: essentials
-        period:
-          type: object
-          description: Period of a subscription
-          properties:
-            duration:
-              type: string
-              description: The amount of time a subscription period lasts
-              format: Duration in ISO-8601
-              example: P1M
-            start:
-              description: When the period starts
-              type: string
-              format: date-time
-              example: 2017-07-21T17:32:28.000Z
-            end:
-              description: When the period ends
-              type: string
-              format: date-time
-              example: 2017-07-21T17:32:28.000Z
         status:
           type: string
           description:
@@ -4658,33 +3340,7 @@ components:
         description:
           type: string
           description: Short description for the invoice
-          example: PRO Plan Monthly|Pay as you go (2 credits)
-        total_amount:
-          type: object
-          properties:
-            currency:
-              type: object
-              description: Currency information
-              properties:
-                code:
-                  type: string
-                  description: Code that uniquely identifies a currency
-                  format: ISO-4217
-                  example: EUR
-            amount:
-              type: integer
-              example: 100
-            scale:
-              type: integer
-              description: Number of digits to the right of the decimal point in `amount`
-              example: 2
-        _links:
-          type: object
-          properties:
-            display:
-              type: string
-              format: url
-              example: https://admin.typeform.com/billing/invoice/in_123
+          example: PRO Plan Monthly|Pay as you go (2 credits)        
     InvalidFormatVATNumberResponse:
       type: object
       properties:
