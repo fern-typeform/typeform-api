@@ -60,7 +60,7 @@ service:
         typeform using the Create API.
       display-name: Create form
       request:
-        name: CreateThemeRequest
+        name: CreateFormRequest
         body:
           properties:
             title:
