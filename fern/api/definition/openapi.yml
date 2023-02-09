@@ -58,10 +58,12 @@ tags:
 paths:
   "/forms/{form_id}/responses":
     get:
+      operationId: get-form-by-id
       tags:
         - Responses
       summary: Retrieve responses
       description: Returns form responses and date and time of form landing and submission.
+      x-request-name: GetFormByIdRequest
       parameters:
         - name: form_id
           description:
@@ -175,12 +177,14 @@ paths:
         default:
           description: Default response
     delete:
+      operationId: delete-responses
       tags:
         - Responses
       summary: Delete responses
       description:
         Delete responses to a form. You must specify the `included_tokens`
         parameter.
+      x-request-name: DeleteResponsesRequest
       parameters:
         - name: form_id
           description:
@@ -209,6 +213,7 @@ paths:
           description: Default response
   "/forms/{form_id}/responses/{response_id}/fields/{field_id}/files/{filename}":
     get:
+      operationId: retrieve-response-file
       tags:
         - Responses
       summary: Retrieve response file
@@ -251,6 +256,7 @@ paths:
           description: Default response
   /me:
     get:
+      operationId: retrieve-your-own-account
       security:
         - bearer_auth: []
       tags:
@@ -269,6 +275,7 @@ paths:
           description: Default response
   /forms:
     post:
+      operationId: create-form
       tags:
         - Forms
       summary: Create form
@@ -305,35 +312,8 @@ paths:
                 settings:
                   type: object
                   properties:
-                    language:
+                    language: 
                       type: string
-                      enum:
-                        - en
-                        - es
-                        - ca
-                        - fr
-                        - de
-                        - ru
-                        - it
-                        - da
-                        - pt
-                        - ch
-                        - zh
-                        - nl
-                        - no
-                        - uk
-                        - ja
-                        - ko
-                        - hr
-                        - fi
-                        - sv
-                        - pl
-                        - el
-                        - hu
-                        - tr
-                        - cs
-                        - et
-                        - di
                     is_public:
                       type: boolean
                       default: true
@@ -342,9 +322,6 @@ paths:
                         is private).
                     progress_bar:
                       type: string
-                      enum:
-                        - percentage
-                        - proportion
                       default: proportion
                       description:
                         Basis for the progress bar displayed on the screen.
@@ -488,6 +465,7 @@ paths:
           description: Default response
 servers:
   - url: https://api.typeform.com/
+    x-server-name: Production
 components:
   securitySchemes:
     legacy_bearer_auth:
@@ -804,17 +782,6 @@ components:
               type:
                 type: string
                 description: The answer-field's type.
-                enum:
-                  - choice
-                  - choices
-                  - date
-                  - email
-                  - url
-                  - file_url
-                  - number
-                  - boolean
-                  - text
-                  - payment
               choice:
                 type: object
                 description: Represents single choice answers for dropdown-like fields.
@@ -904,17 +871,6 @@ components:
               type:
                 type: string
                 description: The answer-field's type.
-                enum:
-                  - choice
-                  - choices
-                  - date
-                  - email
-                  - url
-                  - file_url
-                  - number
-                  - boolean
-                  - text
-                  - payment
               choice:
                 type: object
                 description: Represents single choice answers for dropdown-like fields.
@@ -1432,17 +1388,6 @@ components:
                     type:
                       type: string
                       description: The answer-field's type.
-                      enum:
-                        - choice
-                        - choices
-                        - date
-                        - email
-                        - url
-                        - file_url
-                        - number
-                        - boolean
-                        - text
-                        - payment
                     choice:
                       type: object
                       description:
@@ -1527,17 +1472,6 @@ components:
         type:
           type: string
           description: The answer-field's type.
-          enum:
-            - choice
-            - choices
-            - date
-            - email
-            - url
-            - file_url
-            - number
-            - boolean
-            - text
-            - payment
         choice:
           type: object
           description: Represents single choice answers for dropdown-like fields.
@@ -1611,8 +1545,6 @@ components:
         token:
           type: string
         service:
-          enum:
-            - Messenger
     TypebotResp:
       type: object
       properties:
@@ -2028,10 +1960,6 @@ components:
                 type: string
               in:
                 description: The type of field that caused the error.
-                enum:
-                  - header
-                  - body
-                  - query
                 type: string
             type: object
           type: array
@@ -2057,24 +1985,6 @@ components:
           type:
             description: It determines the type of the field box to render.
             type: string
-            enum:
-              - multiple_choice
-              - picture_choice
-              - date
-              - yes_no
-              - legal
-              - opinion_scale
-              - rating
-              - dropdown
-              - payment
-              - website
-              - file_upload
-              - number
-              - email
-              - long_text
-              - short_text
-              - group
-              - phone_number
           title:
             description: Title is the text that will show up in the top of the field box.
             type: string
@@ -2196,24 +2106,6 @@ components:
                     type:
                       description: It determines the type of the field box to render.
                       type: string
-                      enum:
-                        - multiple_choice
-                        - picture_choice
-                        - date
-                        - yes_no
-                        - legal
-                        - opinion_scale
-                        - rating
-                        - dropdown
-                        - payment
-                        - website
-                        - file_upload
-                        - number
-                        - email
-                        - long_text
-                        - short_text
-                        - group
-                        - phone_number
                     title:
                       description:
                         Title is the text that will show up in the top of the
@@ -2367,10 +2259,6 @@ components:
               platform:
                 description: The name of the platform.
                 type: string
-                enum:
-                  - desktop
-                  - other
-                  - mobile
               responses_count:
                 description: Total of responses received.
                 type: number
@@ -2492,24 +2380,6 @@ components:
                 type:
                   description: It determines the type of the field box to render.
                   type: string
-                  enum:
-                    - multiple_choice
-                    - picture_choice
-                    - date
-                    - yes_no
-                    - legal
-                    - opinion_scale
-                    - rating
-                    - dropdown
-                    - payment
-                    - website
-                    - file_upload
-                    - number
-                    - email
-                    - long_text
-                    - short_text
-                    - group
-                    - phone_number
                 title:
                   description:
                     Title is the text that will show up in the top of the field
@@ -2669,23 +2539,6 @@ components:
                           type:
                             description: It determines the type of the field box to render.
                             type: string
-                            enum:
-                              - multiple_choice
-                              - picture_choice
-                              - date
-                              - yes_no
-                              - legal
-                              - opinion_scale
-                              - rating
-                              - dropdown
-                              - payment
-                              - website
-                              - file_upload
-                              - number
-                              - email
-                              - long_text
-                              - short_text
-                              - phone_number
                           title:
                             description:
                               Title is the text that will show up in the top of
@@ -2849,24 +2702,6 @@ components:
           type:
             description: It determines the type of the field box to render.
             type: string
-            enum:
-              - multiple_choice
-              - picture_choice
-              - date
-              - yes_no
-              - legal
-              - opinion_scale
-              - rating
-              - dropdown
-              - payment
-              - website
-              - file_upload
-              - number
-              - email
-              - long_text
-              - short_text
-              - group
-              - phone_number
           title:
             description: Title is the text that will show up in the top of the field box.
             type: string
@@ -2891,23 +2726,6 @@ components:
                     type:
                       description: It determines the type of the field box to render.
                       type: string
-                      enum:
-                        - multiple_choice
-                        - picture_choice
-                        - date
-                        - yes_no
-                        - legal
-                        - opinion_scale
-                        - rating
-                        - dropdown
-                        - payment
-                        - website
-                        - file_upload
-                        - number
-                        - email
-                        - long_text
-                        - short_text
-                        - phone_number
                     title:
                       description:
                         Title is the text that will show up in the top of the
@@ -3764,28 +3582,16 @@ components:
           plan_name:
             type: string
             description: The name of a plan
-            enum:
-              - free
-              - essentials
-              - professional
-              - premmium
-              - enterprise
             example: essentials
           period:
             type: string
             description: The amount of time a subscription period lasts
             format: Duration in ISO-8601
-            enum:
-              - P1M
-              - P1Y
             example: P1M
           charge_model:
             type: string
             description: Determines how charges are calculated
             example: fixed
-            enum:
-              - fixed
-              - tiered
           price:
             type: object
             properties:
@@ -3816,15 +3622,10 @@ components:
                   example: 01CETTA1Z7RFREW3XEPSJDHRAT
                 type:
                   type: string
-                  enum:
-                    - members_seats
                 charge_model:
                   example: tiered
                   type: string
                   description: Determines how charges are calculated
-                  enum:
-                    - fixed
-                    - tiered
                 tiers:
                   type: array
                   items:
@@ -3872,28 +3673,16 @@ components:
         plan_name:
           type: string
           description: The name of a plan
-          enum:
-            - free
-            - essentials
-            - professional
-            - premmium
-            - enterprise
           example: essentials
         period:
           type: string
           description: The amount of time a subscription period lasts
           format: Duration in ISO-8601
-          enum:
-            - P1M
-            - P1Y
           example: P1M
         charge_model:
           type: string
           description: Determines how charges are calculated
           example: fixed
-          enum:
-            - fixed
-            - tiered
         price:
           type: object
           properties:
@@ -3924,15 +3713,10 @@ components:
                 example: 01CETTA1Z7RFREW3XEPSJDHRAT
               type:
                 type: string
-                enum:
-                  - members_seats
               charge_model:
                 example: tiered
                 type: string
                 description: Determines how charges are calculated
-                enum:
-                  - fixed
-                  - tiered
               tiers:
                 type: array
                 items:
@@ -3972,20 +3756,11 @@ components:
     PlanName:
       type: string
       description: The name of a plan
-      enum:
-        - free
-        - essentials
-        - professional
-        - premmium
-        - enterprise
       example: essentials
     Period:
       type: string
       description: The amount of time a subscription period lasts
       format: Duration in ISO-8601
-      enum:
-        - P1M
-        - P1Y
       example: P1M
     Currency:
       type: object
@@ -4005,9 +3780,6 @@ components:
       type: string
       description: Determines how charges are calculated
       example: fixed
-      enum:
-        - fixed
-        - tiered
     Price:
       type: object
       properties:
@@ -4075,15 +3847,10 @@ components:
           example: 01CETTA1Z7RFREW3XEPSJDHRAT
         type:
           type: string
-          enum:
-            - members_seats
         charge_model:
           example: tiered
           type: string
           description: Determines how charges are calculated
-          enum:
-            - fixed
-            - tiered
         tiers:
           type: array
           items:
@@ -4190,8 +3957,6 @@ components:
           example: 01CETZ7TAD6RAHFB1TRE3SMG8
         source:
           type: string
-          enum:
-            - card
         payload:
           type: object
           properties:
@@ -4203,15 +3968,6 @@ components:
               type: string
               description: Brand of the credit card
               example: MasterCard
-              enum:
-                - American Express
-                - Diners Club
-                - Discover
-                - JCB
-                - MasterCard
-                - UnionPay
-                - Visa
-                - or Unknown
             last4:
               type: integer
               description: Last four digits of the credit card
@@ -4351,15 +4107,8 @@ components:
       properties:
         duration:
           type: string
-          enum:
-            - once
-            - month
-            - forever
         type:
           type: string
-          enum:
-            - amount
-            - percentage
         amount:
           type: object
           description: It will only be present when type is `amount`
@@ -4394,15 +4143,8 @@ components:
           example: coupon-id
         type:
           type: string
-          enum:
-            - amount
-            - percentage
         duration:
           type: string
-          enum:
-            - once
-            - forever
-            - P3M
         amount:
           description: Amount to discount. Only set when `type` is `amount`
           type: object
@@ -4437,8 +4179,6 @@ components:
             properties:
               type:
                 type: string
-                enum:
-                  - base_plan
               payload:
                 type: object
                 properties:
@@ -4449,28 +4189,16 @@ components:
                   plan_name:
                     type: string
                     description: The name of a plan
-                    enum:
-                      - free
-                      - essentials
-                      - professional
-                      - premmium
-                      - enterprise
                     example: essentials
                   period:
                     type: string
                     description: The amount of time a subscription period lasts
                     format: Duration in ISO-8601
-                    enum:
-                      - P1M
-                      - P1Y
                     example: P1M
                   charge_model:
                     type: string
                     description: Determines how charges are calculated
                     example: fixed
-                    enum:
-                      - fixed
-                      - tiered
               price:
                 type: object
                 properties:
@@ -4503,10 +4231,6 @@ components:
                 EU
               type: string
               example: reverse
-              enum:
-                - none
-                - included
-                - reverse
             rate:
               description:
                 VAT rate to apply, varies between countries. It only applies
@@ -4554,15 +4278,8 @@ components:
               example: coupon-id
             type:
               type: string
-              enum:
-                - amount
-                - percentage
             duration:
               type: string
-              enum:
-                - once
-                - forever
-                - P3M
             amount:
               description: Amount to discount. Only set when `type` is `amount`
               type: object
@@ -4594,8 +4311,6 @@ components:
       properties:
         type:
           type: string
-          enum:
-            - base_plan
         payload:
           type: object
           properties:
@@ -4606,28 +4321,16 @@ components:
             plan_name:
               type: string
               description: The name of a plan
-              enum:
-                - free
-                - essentials
-                - professional
-                - premmium
-                - enterprise
               example: essentials
             period:
               type: string
               description: The amount of time a subscription period lasts
               format: Duration in ISO-8601
-              enum:
-                - P1M
-                - P1Y
               example: P1M
             charge_model:
               type: string
               description: Determines how charges are calculated
               example: fixed
-              enum:
-                - fixed
-                - tiered
         price:
           type: object
           properties:
@@ -4657,10 +4360,6 @@ components:
             Spain, and `reverse` for non-Spanish companies inside the EU
           type: string
           example: reverse
-          enum:
-            - none
-            - included
-            - reverse
         rate:
           description:
             VAT rate to apply, varies between countries. It only applies when
@@ -4713,12 +4412,6 @@ components:
             plan_name:
               type: string
               description: The name of a plan
-              enum:
-                - free
-                - essentials
-                - professional
-                - premmium
-                - enterprise
               example: essentials
             period:
               type: object
@@ -4728,9 +4421,6 @@ components:
                   type: string
                   description: The amount of time a subscription period lasts
                   format: Duration in ISO-8601
-                  enum:
-                    - P1M
-                    - P1Y
                   example: P1M
                 start:
                   description: When the period starts
@@ -4748,12 +4438,6 @@ components:
                 The status of the subscription. It will be ongoing while users
                 don't perform any action that will change the subscription at
                 the end of the current period
-              enum:
-                - ongoing
-                - canceling
-                - downgrading
-                - contracting
-                - upcoming
               example: ongoing
             addons:
               type: array
@@ -4766,8 +4450,6 @@ components:
                     example: 01CETTA1Z7RFREW3XEPSJDHRAT
                   type:
                     type: string
-                    enum:
-                      - members_seats
                   quantity:
                     type: integer
                     minimum: 0
@@ -4775,12 +4457,6 @@ components:
         plan_name:
           type: string
           description: The name of a plan
-          enum:
-            - free
-            - essentials
-            - professional
-            - premmium
-            - enterprise
           example: essentials
         period:
           type: object
@@ -4790,9 +4466,6 @@ components:
               type: string
               description: The amount of time a subscription period lasts
               format: Duration in ISO-8601
-              enum:
-                - P1M
-                - P1Y
               example: P1M
             start:
               description: When the period starts
@@ -4810,12 +4483,6 @@ components:
             The status of the subscription. It will be ongoing while users don't
             perform any action that will change the subscription at the end of
             the current period
-          enum:
-            - ongoing
-            - canceling
-            - downgrading
-            - contracting
-            - upcoming
           example: ongoing
         addons:
           type: array
@@ -4828,8 +4495,6 @@ components:
                 example: 01CETTA1Z7RFREW3XEPSJDHRAT
               type:
                 type: string
-                enum:
-                  - members_seats
               quantity:
                 type: integer
                 minimum: 0
@@ -4841,12 +4506,6 @@ components:
         plan_name:
           type: string
           description: The name of a plan
-          enum:
-            - free
-            - essentials
-            - professional
-            - premmium
-            - enterprise
           example: essentials
         period:
           type: object
@@ -4856,9 +4515,6 @@ components:
               type: string
               description: The amount of time a subscription period lasts
               format: Duration in ISO-8601
-              enum:
-                - P1M
-                - P1Y
               example: P1M
             start:
               description: When the period starts
@@ -4876,12 +4532,6 @@ components:
             The status of the subscription. It will be ongoing while users don't
             perform any action that will change the subscription at the end of
             the current period
-          enum:
-            - ongoing
-            - canceling
-            - downgrading
-            - contracting
-            - upcoming
           example: ongoing
         addons:
           type: array
@@ -4894,8 +4544,6 @@ components:
                 example: 01CETTA1Z7RFREW3XEPSJDHRAT
               type:
                 type: string
-                enum:
-                  - members_seats
               quantity:
                 type: integer
                 minimum: 0
@@ -4912,9 +4560,6 @@ components:
           type: string
           description: The amount of time a subscription period lasts
           format: Duration in ISO-8601
-          enum:
-            - P1M
-            - P1Y
           example: P1M
         start:
           description: When the period starts
@@ -4930,9 +4575,6 @@ components:
       type: string
       description: The amount of time a subscription period lasts
       format: Duration in ISO-8601
-      enum:
-        - P1M
-        - P1Y
       example: P1M
     SubscriptionStatus:
       type: string
@@ -4940,12 +4582,6 @@ components:
         The status of the subscription. It will be ongoing while users don't
         perform any action that will change the subscription at the end of the
         current period
-      enum:
-        - ongoing
-        - canceling
-        - downgrading
-        - contracting
-        - upcoming
       example: ongoing
     SeatsAddonReadModel:
       type: object
@@ -4956,8 +4592,6 @@ components:
           example: 01CETTA1Z7RFREW3XEPSJDHRAT
         type:
           type: string
-          enum:
-            - members_seats
         quantity:
           type: integer
           minimum: 0
@@ -5056,35 +4690,22 @@ components:
       properties:
         code:
           type: string
-          enum:
-            - INVALID_FORMAT_VAT_NUMBER
     VATServiceUnavailableResponse:
       type: object
       properties:
         code:
           type: string
-          enum:
-            - VAT_SERVICE_UNAVAILABLE
     NonExistentVATNumberResponse:
       type: object
       properties:
         code:
           type: string
-          enum:
-            - NON_EXISTENT_VAT_NUMBER
     CardErrorResponse:
       type: object
       properties:
         code:
           type: string
           description: A code detailing what went wrong with the given card
-          enum:
-            - CARD_DECLINED
-            - INSUFFICIENT_FUNDS
-            - INCORRECT_CVC
-            - EXPIRED_CARD
-            - PROCESSING_ERROR
-            - INCORRECT_NUMBER
     UpdateEmailRequest:
       type: object
       required:
@@ -5148,9 +4769,6 @@ components:
           example: true
         language:
           type: string
-          enum:
-            - en
-            - es
           example: en
     UserResponse:
       type: object
@@ -5222,9 +4840,6 @@ components:
           example: true
         language:
           type: string
-          enum:
-            - en
-            - es
           example: en
     EmptyObjectResponse:
       type: object
@@ -5240,10 +4855,6 @@ components:
           example: true
         language:
           type: string
-          enum:
-            - en
-            - es
-          example: en
     EmailSettingsItem:
       type: object
       required:
@@ -5263,3 +4874,6 @@ components:
       minLength: 2
       maxLength: 128
       example: Beardy Beardinson
+    Language:
+      type: string
+      description: The language of text
